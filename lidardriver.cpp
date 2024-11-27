@@ -43,7 +43,9 @@ public:
 	{
 		SCAN_DIM = (STD_DIM/res)+1;									//utente sceglie la risoluzione
 		
-		// se res<0.1 o res>1 lancia exception									
+		if (res < 0.1 || res > 1) {
+        		throw std::invalid_argument("Risoluzione fuori range (0.1-1).");
+    		}											// se res<0.1 o res>1 lancia exception									
 		buffer.resize(BUFFER_DIM);
 
 		for(int i=0;i<BUFFER_DIM;i++)								//resize di ogni vettore del vettore	
@@ -70,7 +72,9 @@ public:
 
 	std::vector<double> get_scan()			//output della scansione meno recente nel buffer e sua successiva eliminazione
 	{
-		if(front < 0)	std::cout<<"Nessuna misura inserita.}\n";					//LANCIARE ECCEZIONE!
+		if (front < 0) {
+        		throw std::runtime_error("Il buffer è vuoto.");
+    		}										//LANCIARE ECCEZIONE!
 
 		std::vector<double> temp1 = std::move(buffer[front]);							//il valore piu' vecchio viene spostato in temp
 		buffer[front].resize(SCAN_DIM,0);						//lo scan specifico viene reinizializzato		IN TEORIA INUTILE IN QUANTO RISOLTO IN NEW SCAN
@@ -95,13 +99,18 @@ public:
 		}
 	}															//a questo punto il buffer dovrebbe contenere solo vettori empty e temp va out of scope
 
-	get_distance(double angle)
-	{
-		double aIndex = ((SCAN_DIM-1)/STD_DIM)*angle;			//trovo il valore dell'indice dell'angolo cercato
-		int cIndex = static_cast<int>(std::round(aIndex));		//arrotondo per poterlo usare come indice del vector
-
-		return buffer[rear][cIndex];							//controllare se va bene usare in questo modo il vector di vector.		
+	double get_distance(double angle) const {
+	    if (front == -1) {
+	        throw std::runtime_error("Il buffer è vuoto.");
+	    }
+	    if (angle < 0 || angle > 180) {
+	        throw std::out_of_range("Angolo fuori range (0-180 gradi).");
+	    }
+	    double aIndex = ((SCAN_DIM - 1) / STD_DIM) * angle;
+	    int cIndex = static_cast<int>(std::round(aIndex));
+	    return buffer[rear][cIndex];
 	}
+
 
 	std::ostream& LidarDrive::operator<<(std::ostream& out) const
 	{
