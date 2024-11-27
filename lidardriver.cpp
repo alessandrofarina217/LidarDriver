@@ -106,7 +106,7 @@ public:
 	std::ostream& LidarDrive::operator<<(std::ostream& out) const
 	{
 		/*
-  			FarinaTiAmo
+  			#DioPorco
 		*/
 	} 
 
