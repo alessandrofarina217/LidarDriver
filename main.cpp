@@ -37,6 +37,7 @@ int main(){
 
 //utilizzo get_distance
     double distance = lidar.get_distance(3.0);            //recupero distance da un angolo specifico (ad esempio qui 3°);
+    std::cout << "Distanza a 3°: " << distance << "\n";   //stampa della distanza ottenuta
 
 //utilizzo resize automatico della funzione new_scan e allo stesso tempo del buffer circolare 
 //(siccome il buffer era già stato riempito questo nuovo scan dovrà andare a sovrascrivere quello mneo recente già presente nel buffer)
