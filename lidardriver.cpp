@@ -110,15 +110,6 @@ public:
 	    int cIndex = static_cast<int>(std::round(aIndex));
 	    return buffer[rear][cIndex];
 	}
-
-
-	std::ostream& LidarDrive::operator<<(std::ostream& out) const
-	{
-		/*
-  			#DioPorco
-		*/
-	} 
-
 }
 // Overload dell'operatore <<
 std::ostream& operator<<(std::ostream& out, const LidarDriver& lidar) {
