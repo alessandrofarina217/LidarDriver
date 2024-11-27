@@ -111,3 +111,15 @@ public:
 	} 
 
 }
+// Overload dell'operatore <<
+std::ostream& operator<<(std::ostream& out, const LidarDriver& lidar) {
+    if (lidar.front == -1) {
+        out << "Buffer vuoto.\n";
+    } else {
+        int index = lidar.rear; // Stampa l'ultima scansione aggiunta
+        for (double value : lidar.buffer[index]) {
+            out << value << " ";
+        }
+    }
+    return out;
+}
