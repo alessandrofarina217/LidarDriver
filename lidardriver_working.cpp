@@ -19,7 +19,7 @@ void LidarDriver::update_front() {
 
 //costruttore di default
 LidarDriver::LidarDriver() {
-    SCAN_DIM = STD_DIM + 1;
+    scan_dim = STD_DIM + 1;
     }
 }
 
@@ -28,7 +28,7 @@ LidarDriver::LidarDriver(double res) {
     if (res < 0.1 || res > 1.0) {
         throw std::invalid_argument("Risoluzione fuori range (0.1-1).");
     }
-    SCAN_DIM = (STD_DIM / res) + 1;
+    scan_dim = (STD_DIM / res) + 1;
     }
 }
 
@@ -36,8 +36,8 @@ LidarDriver::LidarDriver(double res) {
 void LidarDriver::new_scan(std::vector<double> inputScan) {
     update_rear();
 
-    if (inputScan.size() != SCAN_DIM) {
-        inputScan.resize(SCAN_DIM);
+    if (inputScan.size() != scan_dim) {
+        inputScan.resize(scan_dim);
     }
     buffer[rear] = std::move(inputScan);
     if (front == -1 || front == rear) {
@@ -78,7 +78,7 @@ double LidarDriver::get_distance(double angle) const {
     if (angle < 0 || angle > 180) {
         throw std::out_of_range("Angolo fuori range (0-180 gradi).\n");
     }
-    double aIndex = ((SCAN_DIM - 1) / STD_DIM) * angle;
+    double aIndex = ((scan_dim - 1) / STD_DIM) * angle;
     int cIndex = static_cast<int>(std::round(aIndex));
     return buffer[rear][cIndex];
 }
