@@ -6,8 +6,19 @@ class LidarDriver
 	int SCAN_DIM;												//dimensione di uno scan scelto dall'utente
 	std::vector<double> temp;									//vettore singolo scan
 	std::vector<std::vector<double>> buffer;					//buffer, matrice BUFFER_DIM scan
-	int head = 0;												//testa della coda (inizializzato) primo valore vuoto o sovrascrivibile
-	int tail = -1;												//fine della coda (inizializzato) ultimo valore vuoto o non sovrascrivibile
+	int front = -1;												//testa della coda (inizializzato) primo valore vuoto o sovrascrivibile
+	int rear = -1;												//fine della coda (inizializzato) ultimo valore vuoto o non sovrascrivibile
+
+	void update_rear()
+	{
+		if(rear == BUFFER_DIM-1) rear = 0;
+		else rear++;
+	}
+	void update_front()
+	{
+		if(front == BUFFER_DIM-1) front = 0;
+		else front++;
+	}
 
 public:
 
@@ -40,33 +51,47 @@ public:
 	}
 
 	//funzioni
-	new_scan(std::vector<double> inputScan)			//memorizza scansione nel buffer. Il passaggio per valore garantisce il mantenimento dei dati originali e il move consente di evitare altri overhead 
+	void new_scan(std::vector<double> inputScan)			//memorizza scansione nel buffer. Il passaggio per valore garantisce il mantenimento dei dati originali e il move consente di evitare altri overhead 
 	{
+		update_rear();				
+
 		if(inputScan.size()!=SCAN_DIM)								//effettua il resize di inputScan per adattarla a quella degli scan del buffer
 		{
 			inputScan.resize(SCAN_DIM);
 		}
 		//copiare il vettore input ottenuto, CONTROLLARE SE IL VETTORE SI PUO' MUOVERE PER EVITARE OVERHEAD
-		
-		buffer[head] = std::move(inputScan);					//SPOSTA, non copia, il vettore modificato nel buffer per evitare overhead.		
+		buffer[rear] = std::move(inputScan);					//SPOSTA, non copia, il vettore modificato nel buffer per evitare overhead.		
 
-		update_indexes();											//aggiorna gli indici
+		if(front == -1||front == rear) update_front();								//aggiorna il front solo se la coda e' vuota oppure se il vecchio front e' il nuovo rear	
+
 	}
 
-	get_scan()			//output della scansione meno recente nel buffer e sua successiva eliminazione
+	std::vector<double> get_scan()			//output della scansione meno recente nel buffer e sua successiva eliminazione
 	{
-		if(tail < 0)	std::cout<<"Nessuna misura inserita.}\n";
+		if(front < 0)	std::cout<<"Nessuna misura inserita.}\n";					//LANCIARE ECCEZIONE!
 
-		temp = std::move(buffer[tail]);							//il valore piu' vecchio viene spostato in temp
-		buffer[tail].resize(SCAN_DIM,0);						//lo scan specifico viene reinizializzato
+		temp = std::move(buffer[front]);							//il valore piu' vecchio viene spostato in temp
+		buffer[front].resize(SCAN_DIM,0);						//lo scan specifico viene reinizializzato
 		
-		if(tail == head-1){}
-		else tail++;													//tail punta al nuovo valore piu' vecchio.
+		if(front == rear)										
+		{
+			front = -1;
+			rear = -1;
+		}
+		else update_front();
+
+		return temp;
 	}
 
-	clear_buffer()
+	void clear_buffer()
 	{
-
+		if(rear <= front)
+		{
+			for(int i=(rear+(BUFFER_DIM-front));i>=0;i--)
+			{
+				
+			}
+		}
 	}
 
 	get_distance()
@@ -74,12 +99,4 @@ public:
 
 	}
 
-	void update_indexes()
-	{
-		if (head == BUFFER_DIM-1) head = 0;				//head fa il giro
-		else head++;									//head incrementa normalmente
-
-		if (head == tail) tail++;							//se la coda e' a regime, head prende il posto di tail, altrimenti tail tiene la sua posizione
-		else if (tail == BUFFER_DIM) tail = 0;				//se tail arriva alla fine e head e' appena dietro, allora torna a 0.
-	}
 }
