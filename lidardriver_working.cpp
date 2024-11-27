@@ -1,6 +1,5 @@
 #include "lidardriver.h"
 #include <cmath>
-#include <stdexcept>
 
 // Funzione per aggiornare la coda (rear) del buffer
 void LidarDriver::update_rear() {
