@@ -1,4 +1,4 @@
-#include "..\include\lidardriver.h"
+#include "../include/lidardriver.h"
 #include <cmath>
 
 //funzione per aggiornare la coda (rear) del buffer
