@@ -58,7 +58,7 @@ int main(){
 
 // Prova a recuperare una scansione dopo aver svuotato il buffer
     try {
-        scan = lidar.get_scan();  // Questo dovrebbe lanciare un'eccezione
+        lidar.get_scan();  // Questo dovrebbe lanciare un'eccezione
     } catch (const std::exception& e) {
         std::cerr << "Errore: " << e.what();    //(cerr è un cout ma fatto apposta per i messaggi di errore)
     }
