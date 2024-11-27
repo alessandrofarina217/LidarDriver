@@ -13,7 +13,7 @@ class LidarDriver
 		static constexpr int STD_DIM = 180;        		// Risoluzione angolare standard
 		static constexpr int BUFFER_DIM = 10;     		// Dimensione del buffer circolare
 		
-		int SCAN_DIM;                              		// Dimensione della scansione
+		int scan_dim;                              		// Dimensione della scansione
 		std::array<std::vector<double>, BUFFER_DIM> buffer;   	// Buffer circolare
 		int front = -1;                            		// Testa del buffer 
 		int rear = -1;                             		// Coda del buffer
