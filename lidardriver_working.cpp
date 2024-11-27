@@ -1,7 +1,7 @@
 #include "lidardriver.h"
 #include <cmath>
 
-// Funzione per aggiornare la coda (rear) del buffer
+//funzione per aggiornare la coda (rear) del buffer
 void LidarDriver::update_rear() {
     if (rear == BUFFER_DIM - 1) 
         rear = 0;
@@ -9,7 +9,7 @@ void LidarDriver::update_rear() {
         rear++;
 }
 
-// Funzione per aggiornare la testa (front) del buffer
+//funzione per aggiornare la testa (front) del buffer
 void LidarDriver::update_front() {
     if (front == BUFFER_DIM - 1) 
         front = 0;
@@ -17,13 +17,13 @@ void LidarDriver::update_front() {
         front++;
 }
 
-// Costruttore di default
+//costruttore di default
 LidarDriver::LidarDriver() {
     SCAN_DIM = STD_DIM + 1;
     }
 }
 
-// Costruttore con risoluzione personalizzata
+//costruttore con risoluzione personalizzata
 LidarDriver::LidarDriver(double res) {
     if (res < 0.1 || res > 1.0) {
         throw std::invalid_argument("Risoluzione fuori range (0.1-1).");
@@ -32,20 +32,20 @@ LidarDriver::LidarDriver(double res) {
     }
 }
 
-// Inserisce una nuova scansione nel buffer
+//inserisce una nuova scansione nel buffer
 void LidarDriver::new_scan(std::vector<double> inputScan) {
-    update_rear();  // Funzione definita correttamente
+    update_rear();
 
     if (inputScan.size() != SCAN_DIM) {
         inputScan.resize(SCAN_DIM);
     }
     buffer[rear] = std::move(inputScan);
     if (front == -1 || front == rear) {
-        update_front();  // Funzione definita correttamente
+        update_front();
     }
 }
 
-// Restituisce la scansione meno recente e la rimuove
+//restituisce la scansione meno recente e la rimuove
 std::vector<double> LidarDriver::get_scan() {
     if (front < 0) {
         throw std::runtime_error("Il buffer è vuoto.");
@@ -55,12 +55,12 @@ std::vector<double> LidarDriver::get_scan() {
         front = -1;
         rear = -1;
     } else {
-        update_front();  // Funzione definita correttamente
+        update_front(); 
     }
     return temp1;
 }
 
-// Svuota il buffer
+//svuota il buffer
 void LidarDriver::clear_buffer() {
     std::vector<double> temp1;
     for (int i = 0; i < BUFFER_DIM; i++) {
@@ -70,7 +70,7 @@ void LidarDriver::clear_buffer() {
     rear = -1;
 }
 
-// Restituisce la distanza corrispondente a un dato angolo
+//restituisce la distanza corrispondente a un dato angolo
 double LidarDriver::get_distance(double angle) const {
     if (front == -1) {
         throw std::runtime_error("Il buffer è vuoto.\n");
@@ -83,17 +83,17 @@ double LidarDriver::get_distance(double angle) const {
     return buffer[rear][cIndex];
 }
 
-// Implementazione dell'operatore <<
+//implementazione dell'operatore <<
 std::ostream& operator<<(std::ostream& out, const LidarDriver& lidar) {
     if (lidar.front == -1) {
         out << "Buffer vuoto.\n";
     } else {
         int index = lidar.rear;
-        out << "Ultima scansione memorizzata:\n";  // Intestazione per maggiore chiarezza
+        out << "Ultima scansione memorizzata:\n";
         for (double value : lidar.buffer[index]) {
             out << value << " ";
         }
-        out << "\n";  // Aggiungi un a capo alla fine della scansione
+        out << "\n";
     }
     return out;
 }
