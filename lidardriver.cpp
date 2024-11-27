@@ -1,10 +1,14 @@
+#include "lidardriver.h"										//inclusione dell'header file
+#include <iostream>												//libreria non proprio necessaria al momento
+#include <cmath>
+#include <vector>
+#include <utility>
 
 class LidarDriver
 {
 	static constexpr int STD_DIM = 180;											//dimensione di uno scan di default 		
 	static constexpr int BUFFER_DIM = 10;												//dimensione del buffer			scrivere static const se il valore puo' essere scelto nel 
 	int SCAN_DIM;												//dimensione di uno scan scelto dall'utente
-	std::vector<double> temp;									//vettore singolo scan
 	std::vector<std::vector<double>> buffer;					//buffer, matrice BUFFER_DIM scan
 	int front = -1;												//testa della coda (inizializzato) primo valore vuoto o sovrascrivibile
 	int rear = -1;												//fine della coda (inizializzato) ultimo valore vuoto o non sovrascrivibile
@@ -23,16 +27,15 @@ class LidarDriver
 public:
 
 	// costruttori
-	LidarDriver()
+	LidarDriver()												//caso default			RICORDARSI DI AGGIUNGERE LA MEMBER INITIALIZER LIST PER INIZIALIZZARE SCAN_DIM
 	{
-		SCAN_DIM = STD_DIM+1;								//caso default
-		temp.resize(SCAN_DIM);									//resize del vettore di default
+		SCAN_DIM = STD_DIM+1;									
 		buffer.resize(BUFFER_DIM);								//resize del buffer di default
 		
 		for(int i=0;i<BUFFER_DIM;i++)								//resize di ogni vettore del vettore	
 		{
 			buffer[i].resize(SCAN_DIM);
-		}
+		}															//in teoria inutile in quanto si effettua un move su un vector gia' "normalizzato"
 
 	}
 
@@ -40,8 +43,7 @@ public:
 	{
 		SCAN_DIM = (STD_DIM/res)+1;									//utente sceglie la risoluzione
 		
-		// se res<0.1 o res>1 lancia exception
-		temp.resize(SCAN_DIM);									
+		// se res<0.1 o res>1 lancia exception									
 		buffer.resize(BUFFER_DIM);
 
 		for(int i=0;i<BUFFER_DIM;i++)								//resize di ogni vettore del vettore	
@@ -70,8 +72,8 @@ public:
 	{
 		if(front < 0)	std::cout<<"Nessuna misura inserita.}\n";					//LANCIARE ECCEZIONE!
 
-		temp = std::move(buffer[front]);							//il valore piu' vecchio viene spostato in temp
-		buffer[front].resize(SCAN_DIM,0);						//lo scan specifico viene reinizializzato
+		std::vector<double> temp1 = std::move(buffer[front]);							//il valore piu' vecchio viene spostato in temp
+		buffer[front].resize(SCAN_DIM,0);						//lo scan specifico viene reinizializzato		IN TEORIA INUTILE IN QUANTO RISOLTO IN NEW SCAN
 		
 		if(front == rear)										
 		{
@@ -80,23 +82,25 @@ public:
 		}
 		else update_front();
 
-		return temp;
+		return temp1;
 	}
 
-	void clear_buffer()
+	void clear_buffer()											//cancellazione dei vector del buffer, tramite move e out of scope
 	{
-		if(rear <= front)
+		std::vector<double> temp1;								//vector locale, viene deallocato alla fine della funzione
+
+		for(int i=0;i<BUFFER_DIM;i++)							//ogni vector del buffer viene spostato
 		{
-			for(int i=(rear+(BUFFER_DIM-front));i>=0;i--)
-			{
-				
-			}
+			temp1 = std::move(buffer[i]);	
 		}
-	}
+	}															//a questo punto il buffer dovrebbe contenere solo vettori empty e temp va out of scope
 
-	get_distance()
+	get_distance(double angle)
 	{
+		double aIndex = ((SCAN_DIM-1)/STD_DIM)*angle;			//trovo il valore dell'indice dell'angolo cercato
+		int cIndex = static_cast<int>(std::round(aIndex));		//arrotondo per poterlo usare come indice del vector
 
+		return buffer[rear][cIndex];							//controllare se va bene usare in questo modo il vector di vector.		
 	}
 
 }
