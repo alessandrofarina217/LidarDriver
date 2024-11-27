@@ -81,10 +81,10 @@ void LidarDriver::clear_buffer() {
 // Restituisce la distanza corrispondente a un dato angolo
 double LidarDriver::get_distance(double angle) const {
     if (front == -1) {
-        throw std::runtime_error("Il buffer è vuoto.");
+        throw std::runtime_error("Il buffer è vuoto.\n");
     }
     if (angle < 0 || angle > 180) {
-        throw std::out_of_range("Angolo fuori range (0-180 gradi).");
+        throw std::out_of_range("Angolo fuori range (0-180 gradi).\n");
     }
     double aIndex = ((SCAN_DIM - 1) / STD_DIM) * angle;
     int cIndex = static_cast<int>(std::round(aIndex));
@@ -97,9 +97,11 @@ std::ostream& operator<<(std::ostream& out, const LidarDriver& lidar) {
         out << "Buffer vuoto.\n";
     } else {
         int index = lidar.rear;
+        out << "Ultima scansione memorizzata:\n";  // Intestazione per maggiore chiarezza
         for (double value : lidar.buffer[index]) {
             out << value << " ";
         }
+        out << "\n";  // Aggiungi un a capo alla fine della scansione
     }
     return out;
 }
