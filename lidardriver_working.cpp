@@ -22,8 +22,6 @@ void LidarDriver::update_front() {
 LidarDriver::LidarDriver() {
     SCAN_DIM = STD_DIM + 1;
     buffer.resize(BUFFER_DIM);
-    for(int i = 0; i < BUFFER_DIM; i++) {
-        buffer[i].resize(SCAN_DIM);
     }
 }
 
@@ -34,8 +32,6 @@ LidarDriver::LidarDriver(double res) {
     }
     SCAN_DIM = (STD_DIM / res) + 1;
     buffer.resize(BUFFER_DIM);
-    for(int i = 0; i < BUFFER_DIM; i++) {
-        buffer[i].resize(SCAN_DIM);
     }
 }
 
