@@ -20,7 +20,6 @@ void LidarDriver::update_front() {
 //costruttore di default
 LidarDriver::LidarDriver() {
     scan_dim = STD_DIM + 1;
-    }
 }
 
 //costruttore con risoluzione personalizzata
@@ -30,7 +29,6 @@ LidarDriver::LidarDriver(double res) {
     }
     scan_dim = (STD_DIM / res) + 1;
     }
-}
 
 //inserisce una nuova scansione nel buffer
 void LidarDriver::new_scan(std::vector<double> inputScan) {
