@@ -60,7 +60,7 @@ int main(){
     try {
         scan = lidar.get_scan();  // Questo dovrebbe lanciare un'eccezione
     } catch (const std::exception& e) {
-        std::cerr << "Errore: " << e.what() << "\n";    //(cerr è un cout ma fatto apposta per i messaggi di errore)
+        std::cerr << "Errore: " << e.what();    //(cerr è un cout ma fatto apposta per i messaggi di errore)
     }
 // Stampa dell'ultima scansione usando l'overload di <<
     std::cout << "Ultima scansione nel buffer:\n" << lidar << "\n";
