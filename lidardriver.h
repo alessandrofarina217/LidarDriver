@@ -33,7 +33,7 @@ class LidarDriver
 		double get_distance(double angle) const;      		// Restituisce la distanza corrispondente a un dato angolo
 
 		// Overload operatore <<
-		std::ostream& operator<<(std::ostream& out) const;
+		friend std::ostream& operator<<(std::ostream& out, const LidarDriver& lidar);
 };
 
 #endif // LIDARDRIVER_H
