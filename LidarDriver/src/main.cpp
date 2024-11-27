@@ -72,7 +72,7 @@ int main(){
     }
     std::cout << "\n";
 
-// Stampo l'ultima scansione usando l'overload di <<
+//stampo l'ultima scansione usando l'overload di <<
     std::cout << "Ultima scansione nel buffer:\n" << lidar << "\n";
 
     return 0;
