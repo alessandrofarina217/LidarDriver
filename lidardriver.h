@@ -2,6 +2,7 @@
 #define LIDARDRIVER_H
 
 #include <vector>
+#include <array>
 #include <iostream>
 #include <stdexcept> 
 
@@ -13,7 +14,7 @@ class LidarDriver
 		static constexpr int BUFFER_DIM = 10;     		// Dimensione del buffer circolare
 		
 		int SCAN_DIM;                              		// Dimensione della scansione
-		std::vector<std::vector<double>> buffer;   		// Buffer circolare
+		std::array<std::vector<double>, BUFFER_DIM> buffer;   	// Buffer circolare
 		int front = -1;                            		// Testa del buffer 
 		int rear = -1;                             		// Coda del buffer
 
