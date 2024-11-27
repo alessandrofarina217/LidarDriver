@@ -1,20 +1,32 @@
-Descrizione
-Il progetto LidarDriver è un'applicazione progettata per gestire e simulare il funzionamento di un driver LIDAR. La struttura del progetto è suddivisa in più file per modularità e semplicità di gestione.
+LidarDriver
 
-Struttura del progetto
-include/lidardriver.h: Contiene la dichiarazione delle funzioni e delle classi principali utilizzate nel progetto.
-src/main.cpp: Punto di ingresso del programma. Gestisce l'interazione utente e l'esecuzione generale.
-src/lidarDrive.cpp: Implementa le funzionalità dichiarate nell'header lidardriver.h.
-Suddivisione del lavoro
+--- INTRODUZIONE ---
+Il seguente progetto è parte del corso di Laboratorio di Programmazione (progetto intermedio). È stato svolto dal gruppo "_sudo rm -rf /*" (underscore per motivi di sicurezza).
+Il progetto LidarDriver è un'applicazione progettata per gestire e simulare il funzionamento di un driver LIDAR.
 
-Il progetto è stato sviluppato in collaborazione da tre persone:
+--- STRUTTURA DEL PROGETTO ---
+La seguente struttura del progetto è suddivisa in più file per questioni di modularità e semplicità di gestione del codice:
 
-Edoardo: Ha scritto il file lidardriver.h.
-Alessandro: Ha scritto il file lidarDrive.cpp.
-Enrico: Ha scritto il file main.cpp.
+LidarDriver:
+├── include
+│     └── lidardriver.h
+├── README.txt
+└── src
+      ├── main.cpp
+      └── lidardriver.cpp
 
-Abbiamo lavorato insieme per definire le idee di base e strutturare il progetto.
-Durante lo sviluppo, ci siamo incontrati regolarmente per:
-Revisionare il codice prodotto da ciascun membro.
-Identificare e risolvere eventuali bug o problemi.
-Testare e ottimizzare il funzionamento complessivo.
+di cui:
+> lidardriver.h è un header file: contiene la dichiarazione delle funzioni e della classe sviluppata e utilizzata nel progetto;
+> lidardriver.cpp è un implementation file: implementa le funzionalità dichiarate nell'header file;
+> main.cpp: punto di ingresso del programma, gestisce l'interazione utente e l'esecuzione generale. In questo caso, è utilizzato come test per la classe.
+
+--- SUDDIVISIONE DEL LAVORO ---
+Il progetto è stato sviluppato dai membri del gruppo, nel seguente modo:
+
+> Edoardo Scudeller: sviluppo del file "lidardriver.h";
+> Alessandro Farina: sviluppo del file "lidardriver.cpp";
+> Enrico Vanghetti: sviluppo del file "main.cpp".
+
+La parte di scrittura è avvenuta principalmente in solitaria.
+In aggiunta, tutti i membri del gruppo si sono occupati di ottimizzare e correggere eventuali errori nei codici, non solo quelli sviluppati da sé ma anche quelli sviluppati dagli altri membri del gruppo.
+I membri si sono incontrati 2 volte fisicamente e 3 volte in via telematica. Gli incontri sono principalmente serviti al chiarimento di domande/dubbi da parte del team.
