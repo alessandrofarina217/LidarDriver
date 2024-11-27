@@ -1,5 +1,3 @@
-// FATTO RIGOROSAMENTE CON CHATGPT!!!!
-
 Descrizione
 Il progetto LidarDriver è un'applicazione progettata per gestire e simulare il funzionamento di un driver LIDAR. La struttura del progetto è suddivisa in più file per modularità e semplicità di gestione.
 
