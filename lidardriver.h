@@ -27,10 +27,10 @@ class LidarDriver
 		LidarDriver(double resolution);           		// Costruttore con risoluzione personalizzata
 
 		// Funzioni 
-		void new_scan(std::vector<double> inputScan); 	// Inserisce una nuova scansione nel buffer
-		std::vector<double> get_scan();               	// Restituisce la scansione meno recente e la rimuove
-		void clear_buffer();                          	// Pulisce il buffer
-		double get_distance(double angle) const;      	// Restituisce la distanza corrispondente a un dato angolo
+		void new_scan(std::vector<double> inputScan); 		// Inserisce una nuova scansione nel buffer
+		std::vector<double> get_scan();               		// Restituisce la scansione meno recente e la rimuove
+		void clear_buffer();                          		// Pulisce il buffer
+		double get_distance(double angle) const;      		// Restituisce la distanza corrispondente a un dato angolo
 
 		// Overload operatore <<
 		std::ostream& operator<<(std::ostream& out) const;
