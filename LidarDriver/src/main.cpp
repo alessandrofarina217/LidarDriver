@@ -1,4 +1,4 @@
-#include "..\include\lidardriver.h"
+#include "../include/lidardriver.h"
 #include <iostream>
 #include <vector>
 #include <cstdlib>  //per srand e rand
