@@ -21,9 +21,6 @@ void LidarDriver::update_front() {
 // Costruttore di default
 LidarDriver::LidarDriver() {
     SCAN_DIM = STD_DIM + 1;
-    buffer.resize(BUFFER_DIM);
-    for(int i = 0; i < BUFFER_DIM; i++) {
-        buffer[i].resize(SCAN_DIM);
     }
 }
 
@@ -33,9 +30,6 @@ LidarDriver::LidarDriver(double res) {
         throw std::invalid_argument("Risoluzione fuori range (0.1-1).");
     }
     SCAN_DIM = (STD_DIM / res) + 1;
-    buffer.resize(BUFFER_DIM);
-    for(int i = 0; i < BUFFER_DIM; i++) {
-        buffer[i].resize(SCAN_DIM);
     }
 }
 
@@ -58,7 +52,6 @@ std::vector<double> LidarDriver::get_scan() {
         throw std::runtime_error("Il buffer è vuoto.");
     }
     std::vector<double> temp1 = std::move(buffer[front]);
-    buffer[front].resize(SCAN_DIM, 0);
     if (front == rear) {
         front = -1;
         rear = -1;
