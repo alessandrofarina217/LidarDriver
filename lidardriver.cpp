@@ -103,4 +103,11 @@ public:
 		return buffer[rear][cIndex];							//controllare se va bene usare in questo modo il vector di vector.		
 	}
 
+	std::ostream& LidarDrive::operator<<(std::ostream& out) const
+	{
+		/*
+  			FarinaTiAmo
+		*/
+	} 
+
 }
